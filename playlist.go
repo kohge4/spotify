@@ -663,3 +663,56 @@ func (c *Client) SetPlaylistImage(playlistID ID, img io.Reader) error {
 	req.Header.Set("Content-Type", "image/jpeg")
 	return c.execute(req, nil, http.StatusAccepted)
 }
+
+// エンドポイント　足りないやつ追加
+func (c *Client) GetCurrentUserPlailist() (*SimplePlaylistPage, error) {
+	spotifyURL := fmt.Sprintf("%sme/playlists", c.baseURL)
+
+	if opt != nil {
+		v := url.Values{}
+		if opt.Limit != nil {
+			v.Set("limit", strconv.Itoa(*opt.Limit))
+		}
+		if opt.Offset != nil {
+			v.Set("offset", strconv.Itoa(*opt.Offset))
+		}
+		if params := v.Encode(); params != "" {
+			spotifyURL += "?" + params
+		}
+	}
+
+	var result SimplePlaylistPage
+
+	err := c.get(spotifyURL, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &results, nil
+}
+
+/*
+func (c *Client) GetPlaylistsForUserOpt(userID string, opt *Options) (*SimplePlaylistPage, error) {
+	spotifyURL := c.baseURL + "users/" + userID + "/playlists"
+	if opt != nil {
+		v := url.Values{}
+		if opt.Limit != nil {
+			v.Set("limit", strconv.Itoa(*opt.Limit))
+		}
+		if opt.Offset != nil {
+			v.Set("offset", strconv.Itoa(*opt.Offset))
+		}
+		if params := v.Encode(); params != "" {
+			spotifyURL += "?" + params
+		}
+	}
+
+	var result SimplePlaylistPage
+
+	err := c.get(spotifyURL, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, err
+}
+*/
