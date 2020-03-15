@@ -665,7 +665,7 @@ func (c *Client) SetPlaylistImage(playlistID ID, img io.Reader) error {
 }
 
 // エンドポイント　足りないやつ追加
-func (c *Client) GetCurrentUserPlailist() (*SimplePlaylistPage, error) {
+func (c *Client) GetCurrentUserPlaylist(opt *Options) (*SimplePlaylistPage, error) {
 	spotifyURL := fmt.Sprintf("%sme/playlists", c.baseURL)
 
 	if opt != nil {
@@ -687,7 +687,7 @@ func (c *Client) GetCurrentUserPlailist() (*SimplePlaylistPage, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &results, nil
+	return &result, nil
 }
 
 /*
