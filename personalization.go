@@ -134,7 +134,7 @@ func (c *Client) GetUserTopArtists() (*PersonalizedUserArtists, error) {
 	return c.GetUserTopArtistsOpt(nil)
 }
 
-func (c *Client) GetUserTopTracksOpt(opt *Options) (*PersonalizedUserTracks, error) {
+func (c *Client) GetUserTopTracks2Opt(opt *Options) (*PersonalizedUserTracks, error) {
 	spotifyURL := c.baseURL + "me/top/tracks"
 
 	if opt != nil {
@@ -162,6 +162,6 @@ func (c *Client) GetUserTopTracksOpt(opt *Options) (*PersonalizedUserTracks, err
 	return &result, nil
 }
 
-func (c *Client) GetUserTopTracks() (*PersonalizedUserTracks, error) {
-	return c.GetUserTopTracksOpt(nil)
+func (c *Client) GetUserTopTracks2() (*PersonalizedUserTracks, error) {
+	return c.GetUserTopTracks2Opt(nil)
 }
