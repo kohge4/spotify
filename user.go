@@ -361,7 +361,7 @@ func (c *Client) CurrentUsersTopArtistsOpt(opt *Options) (*CurrentUserArtistResp
 // CurrentUsersTopArtists is like CurrentUsersTopArtistsOpt but with
 // sensible defaults. The default limit is 20 and the default timerange
 // is medium_term.
-func (c *Client) CurrentUsersTopArtists() (*FullArtistPage, error) {
+func (c *Client) CurrentUsersTopArtists() (*CurrentUserArtistResponse, error) {
 	return c.CurrentUsersTopArtistsOpt(nil)
 }
 

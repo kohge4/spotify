@@ -108,22 +108,22 @@ func (c *Client) GetUserTopArtistsOpt(opt *Options) (*PersonalizedUserArtists, e
 	if opt != nil {
 		v := url.Values{}
 		if opt.Timerange != nil {
-			v.Set("time_range", *opt.TimeRange)
+			v.Set("time_range", *opt.Timerange)
 		}
 		if opt.Limit != nil {
-			v.Set("limit", *opt.limit)
+			v.Set("limit", string(*opt.Limit))
 		}
 		if opt.Offset != nil {
-			v.Set("offset", *opt.OffSet)
+			v.Set("offset", string(*opt.Offset))
 		}
 		if params := v.Encode(); params != "" {
 			spotifyURL += "?" + params
 		}
 	}
 
-	var reuslt PersonalizedUserArtists
+	var result PersonalizedUserArtists
 
-	err := c.get(spotifyURL, &reuslt)
+	err := c.get(spotifyURL, &result)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (c *Client) GetUserTopArtistsOpt(opt *Options) (*PersonalizedUserArtists, e
 }
 
 func (c *Client) GetUserTopArtists() (*PersonalizedUserArtists, error) {
-	return c.GetUserTopArtistOpt(), nil
+	return c.GetUserTopArtistsOpt(nil)
 }
 
 func (c *Client) GetUserTopTracksOpt(opt *Options) (*PersonalizedUserTracks, error) {
@@ -140,13 +140,13 @@ func (c *Client) GetUserTopTracksOpt(opt *Options) (*PersonalizedUserTracks, err
 	if opt != nil {
 		v := url.Values{}
 		if opt.Timerange != nil {
-			v.Set("time_range", *opt.TimeRange)
+			v.Set("time_range", *opt.Timerange)
 		}
 		if opt.Limit != nil {
-			v.Set("limit", *opt.limit)
+			v.Set("limit", string(*opt.Limit))
 		}
 		if opt.Offset != nil {
-			v.Set("offset", *opt.OffSet)
+			v.Set("offset", string(*opt.Offset))
 		}
 		if params := v.Encode(); params != "" {
 			spotifyURL += "?" + params
