@@ -1,6 +1,9 @@
 package spotify
 
-import "net/url"
+import (
+	"net/url"
+	"strconv"
+)
 
 type PersonalizedUserArtists struct {
 	Items []struct {
@@ -111,10 +114,10 @@ func (c *Client) GetUserTopArtistsOpt(opt *Options) (*PersonalizedUserArtists, e
 			v.Set("time_range", *opt.Timerange)
 		}
 		if opt.Limit != nil {
-			v.Set("limit", string(*opt.Limit))
+			v.Set("limit", strconv.Itoa(*opt.Limit))
 		}
 		if opt.Offset != nil {
-			v.Set("offset", string(*opt.Offset))
+			v.Set("offset", strconv.Itoa(*opt.Offset))
 		}
 		if params := v.Encode(); params != "" {
 			spotifyURL += "?" + params
@@ -143,10 +146,10 @@ func (c *Client) GetUserTopTracks2Opt(opt *Options) (*PersonalizedUserTracks, er
 			v.Set("time_range", *opt.Timerange)
 		}
 		if opt.Limit != nil {
-			v.Set("limit", string(*opt.Limit))
+			v.Set("limit", strconv.Itoa(*opt.Limit))
 		}
 		if opt.Offset != nil {
-			v.Set("offset", string(*opt.Offset))
+			v.Set("offset", strconv.Itoa(*opt.Offset))
 		}
 		if params := v.Encode(); params != "" {
 			spotifyURL += "?" + params
