@@ -143,7 +143,7 @@ func (c *Client) GetUserTopTracks2Opt(opt *Options) (*PersonalizedUserTracks, er
 	if opt != nil {
 		v := url.Values{}
 		if opt.Timerange != nil {
-			v.Set("time_range", *opt.Timerange)
+			v.Set("time_range", *opt.Timerange+"_term")
 		}
 		if opt.Limit != nil {
 			v.Set("limit", strconv.Itoa(*opt.Limit))
