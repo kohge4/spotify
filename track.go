@@ -52,6 +52,23 @@ type FullTrack struct {
 	Popularity int `json:"popularity"`
 }
 
+func (ft FullTrack) ToSimpleTrack() *SimpleTrack {
+	return &SimpleTrack{
+		Artists:          ft.Artists,
+		AvailableMarkets: ft.AvailableMarkets,
+		DiscNumber:       ft.DiscNumber,
+		Duration:         ft.Duration,
+		Explicit:         ft.Explicit,
+		ExternalURLs:     ft.ExternalURLs,
+		Endpoint:         ft.Endpoint,
+		ID:               ft.ID,
+		Name:             ft.Name,
+		PreviewURL:       ft.PreviewURL,
+		TrackNumber:      ft.TrackNumber,
+		URI:              ft.URI,
+	}
+}
+
 // PlaylistTrack contains info about a track in a playlist.
 type PlaylistTrack struct {
 	// The date and time the track was added to the playlist.
