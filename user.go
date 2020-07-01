@@ -346,7 +346,6 @@ func (c *Client) CurrentUsersTopArtistsOpt(opt *Options) (*CurrentUserArtistResp
 			spotifyURL += "?" + params
 		}
 	}
-	fmt.Println(spotifyURL)
 
 	var result CurrentUserArtistResponse
 
@@ -368,7 +367,7 @@ func (c *Client) CurrentUsersTopArtists() (*CurrentUserArtistResponse, error) {
 // CurrentUsersTopTracksOpt gets a list of the top played tracks in a given time
 // range of the current Spotify user. It supports up to 50 tracks in a single
 // call. This call requires ScopeUserTopRead.
-func (c *Client) CurrentUsersTopTracksOpt(opt *Options) (*PersonalizedUserTracks, error) {
+func (c *Client) CurrentUsersTopTracksOpt(opt *Options) (*FullTrackPage, error) {
 	spotifyURL := c.baseURL + "me/top/tracks"
 
 	if opt != nil {
@@ -387,7 +386,7 @@ func (c *Client) CurrentUsersTopTracksOpt(opt *Options) (*PersonalizedUserTracks
 		}
 	}
 
-	var result PersonalizedUserTracks
+	var result FullTrackPage
 
 	err := c.get(spotifyURL, &result)
 	if err != nil {
@@ -400,7 +399,7 @@ func (c *Client) CurrentUsersTopTracksOpt(opt *Options) (*PersonalizedUserTracks
 // CurrentUsersTopTracks is like CurrentUsersTopTracksOpt but with
 // sensible defaults. The default limit is 20 and the default timerange
 // is medium_term.
-func (c *Client) CurrentUsersTopTracks() (*PersonalizedUserTracks, error) {
+func (c *Client) CurrentUsersTopTracks() (*FullTrackPage, error) {
 	return c.CurrentUsersTopTracksOpt(nil)
 }
 
