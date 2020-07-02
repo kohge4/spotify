@@ -164,6 +164,8 @@ func isFailure(code int, validCodes []int) bool {
 // even if there are additional success codes that represent success.
 func (c *Client) execute(req *http.Request, result interface{}, needsStatus ...int) error {
 	for {
+		// 日本語対応
+		req.Header.Set("Accept-Language", "ja;q=1")
 		resp, err := c.http.Do(req)
 		if err != nil {
 			return err
@@ -207,7 +209,11 @@ func retryDuration(resp *http.Response) time.Duration {
 
 func (c *Client) get(url string, result interface{}) error {
 	for {
-		resp, err := c.http.Get(url)
+		// 日本語対応
+		req, _ := http.NewRequest("GET", url, nil)
+		req.Header.Set("Accept-Language", "ja;q=1")
+		resp, err := c.http.Do(req)
+		//resp, err := c.http.Get(url)
 		if err != nil {
 			return err
 		}
