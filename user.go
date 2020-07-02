@@ -331,7 +331,7 @@ func (c *Client) CurrentUsersPlaylistsOpt(opt *Options) (*SimplePlaylistPage, er
 // CurrentUsersTopArtistsOpt gets a list of the top played artists in a given time
 // range of the current Spotify user. It supports up to 50 artists in a single
 // call. This call requires ScopeUserTopRead.
-func (c *Client) CurrentUsersTopArtistsOpt(opt *Options) (*CurrentUserArtistResponse, error) {
+func (c *Client) CurrentUsersTopArtistsOpt(opt *Options) (*FullArtistPage, error) {
 	spotifyURL := c.baseURL + "me/top/artists"
 
 	if opt != nil {
@@ -347,7 +347,7 @@ func (c *Client) CurrentUsersTopArtistsOpt(opt *Options) (*CurrentUserArtistResp
 		}
 	}
 
-	var result CurrentUserArtistResponse
+	var result FullArtistPage
 
 	err := c.get(spotifyURL, &result)
 	if err != nil {
@@ -360,7 +360,7 @@ func (c *Client) CurrentUsersTopArtistsOpt(opt *Options) (*CurrentUserArtistResp
 // CurrentUsersTopArtists is like CurrentUsersTopArtistsOpt but with
 // sensible defaults. The default limit is 20 and the default timerange
 // is medium_term.
-func (c *Client) CurrentUsersTopArtists() (*CurrentUserArtistResponse, error) {
+func (c *Client) CurrentUsersTopArtists() (*FullArtistPage, error) {
 	return c.CurrentUsersTopArtistsOpt(nil)
 }
 
@@ -401,34 +401,4 @@ func (c *Client) CurrentUsersTopTracksOpt(opt *Options) (*FullTrackPage, error) 
 // is medium_term.
 func (c *Client) CurrentUsersTopTracks() (*FullTrackPage, error) {
 	return c.CurrentUsersTopTracksOpt(nil)
-}
-
-type CurrentUserArtistResponse struct {
-	Items []struct {
-		ExternalUrls struct {
-			Spotify string `json:"spotify"`
-		} `json:"external_urls"`
-		Followers struct {
-			Href  interface{} `json:"href"`
-			Total int         `json:"total"`
-		} `json:"followers"`
-		Genres []string `json:"genres"`
-		Href   string   `json:"href"`
-		ID     string   `json:"id"`
-		Images []struct {
-			Height int    `json:"height"`
-			URL    string `json:"url"`
-			Width  int    `json:"width"`
-		} `json:"images"`
-		Name       string `json:"name"`
-		Popularity int    `json:"popularity"`
-		Type       string `json:"type"`
-		URI        string `json:"uri"`
-	} `json:"items"`
-	Total    int         `json:"total"`
-	Limit    int         `json:"limit"`
-	Offset   int         `json:"offset"`
-	Href     string      `json:"href"`
-	Previous interface{} `json:"previous"`
-	Next     string      `json:"next"`
 }
