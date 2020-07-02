@@ -47,6 +47,8 @@ type Client struct {
 	baseURL string
 
 	AutoRetry bool
+
+	Language string
 }
 
 // URI identifies an artist, album, track, or category.  For example,
@@ -165,7 +167,11 @@ func isFailure(code int, validCodes []int) bool {
 func (c *Client) execute(req *http.Request, result interface{}, needsStatus ...int) error {
 	for {
 		// 日本語対応
-		req.Header.Set("Accept-Language", "ja;q=1")
+		if c.Language == "ja" {
+			req.Header.Set("Accept-Language", "ja;q=1")
+			// 戻す
+			c.Language = ""
+		}
 		resp, err := c.http.Do(req)
 		if err != nil {
 			return err
@@ -211,7 +217,9 @@ func (c *Client) get(url string, result interface{}) error {
 	for {
 		// 日本語対応
 		req, _ := http.NewRequest("GET", url, nil)
-		req.Header.Set("Accept-Language", "ja;q=1")
+		if c.Language == "ja" {
+			req.Header.Set("Accept-Language", "ja;q=1")
+		}
 		resp, err := c.http.Do(req)
 		//resp, err := c.http.Get(url)
 		if err != nil {
@@ -301,4 +309,9 @@ func (c *Client) NewReleasesOpt(opt *Options) (albums *SimpleAlbumPage, err erro
 // This call requires bearer authorization.
 func (c *Client) NewReleases() (albums *SimpleAlbumPage, err error) {
 	return c.NewReleasesOpt(nil)
+}
+
+// Edit Accepted--Language Header
+func (c *Client) SetLanguage(l string) {
+	c.Language = l
 }
